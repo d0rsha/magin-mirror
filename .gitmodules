@@ -1,0 +1,3 @@
+[submodule "MMM-ip"]
+	path = MMM-ip
+	url = https://github.com/fewieden/MMM-ip.git

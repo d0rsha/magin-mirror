@@ -7,28 +7,13 @@
  * MIT Licensed.
  */
 Module.register("compliments", {
-
 	// Module config defaults.
 	defaults: {
 		compliments: {
-			anytime: [
-				"Hey there sexy!"
-			],
-			morning: [
-				"Good morning, handsome!",
-				"Enjoy your day!",
-				"How was your sleep?"
-			],
-			afternoon: [
-				"Hello, beauty!",
-				"You look sexy!",
-				"Looking good today!"
-			],
-			evening: [
-				"Wow, you look hot!",
-				"You look nice!",
-				"Hi, sexy!"
-			]
+			anytime: ["Drick kaffe!"],
+			morning: ["Nämen godmorgon godmorgon!", "Ta en kaffe!"],
+			afternoon: ["Ta en till kaffe!"],
+			evening: ["Godkväll!"]
 		},
 		updateInterval: 30000,
 		remoteFile: null,
@@ -68,12 +53,12 @@ Module.register("compliments", {
 	},
 
 	/* randomIndex(compliments)
-	 * Generate a random index for a list of compliments.
-	 *
-	 * argument compliments Array<String> - Array with compliments.
-	 *
-	 * return Number - Random index.
-	 */
+   * Generate a random index for a list of compliments.
+   *
+   * argument compliments Array<String> - Array with compliments.
+   *
+   * return Number - Random index.
+   */
 	randomIndex: function(compliments) {
 		if (compliments.length === 1) {
 			return 0;
@@ -95,19 +80,27 @@ Module.register("compliments", {
 	},
 
 	/* complimentArray()
-	 * Retrieve an array of compliments for the time of the day.
-	 *
-	 * return compliments Array<String> - Array with compliments for the time of the day.
-	 */
+   * Retrieve an array of compliments for the time of the day.
+   *
+   * return compliments Array<String> - Array with compliments for the time of the day.
+   */
 	complimentArray: function() {
 		var hour = moment().hour();
 		var compliments;
 
-		if (hour >= this.config.morningStartTime && hour < this.config.morningEndTime && this.config.compliments.hasOwnProperty("morning")) {
+		if (
+			hour >= this.config.morningStartTime &&
+      hour < this.config.morningEndTime &&
+      this.config.compliments.hasOwnProperty("morning")
+		) {
 			compliments = this.config.compliments.morning.slice(0);
-		} else if (hour >= this.config.afternoonStartTime && hour < this.config.afternoonEndTime && this.config.compliments.hasOwnProperty("afternoon")) {
+		} else if (
+			hour >= this.config.afternoonStartTime &&
+      hour < this.config.afternoonEndTime &&
+      this.config.compliments.hasOwnProperty("afternoon")
+		) {
 			compliments = this.config.compliments.afternoon.slice(0);
-		} else if(this.config.compliments.hasOwnProperty("evening")) {
+		} else if (this.config.compliments.hasOwnProperty("evening")) {
 			compliments = this.config.compliments.evening.slice(0);
 		}
 
@@ -116,7 +109,10 @@ Module.register("compliments", {
 		}
 
 		if (this.currentWeatherType in this.config.compliments) {
-			compliments.push.apply(compliments, this.config.compliments[this.currentWeatherType]);
+			compliments.push.apply(
+				compliments,
+				this.config.compliments[this.currentWeatherType]
+			);
 		}
 
 		compliments.push.apply(compliments, this.config.compliments.anytime);
@@ -125,12 +121,16 @@ Module.register("compliments", {
 	},
 
 	/* complimentFile(callback)
-	 * Retrieve a file from the local filesystem
-	 */
+   * Retrieve a file from the local filesystem
+   */
 	complimentFile: function(callback) {
 		var xobj = new XMLHttpRequest(),
-			isRemote = this.config.remoteFile.indexOf("http://") === 0 || this.config.remoteFile.indexOf("https://") === 0,
-			path = isRemote ? this.config.remoteFile : this.file(this.config.remoteFile);
+			isRemote =
+        this.config.remoteFile.indexOf("http://") === 0 ||
+        this.config.remoteFile.indexOf("https://") === 0,
+			path = isRemote
+				? this.config.remoteFile
+				: this.file(this.config.remoteFile);
 		xobj.overrideMimeType("application/json");
 		xobj.open("GET", path, true);
 		xobj.onreadystatechange = function() {
@@ -142,10 +142,10 @@ Module.register("compliments", {
 	},
 
 	/* complimentArray()
-	 * Retrieve a random compliment.
-	 *
-	 * return compliment string - A compliment.
-	 */
+   * Retrieve a random compliment.
+   *
+   * return compliment string - A compliment.
+   */
 	randomCompliment: function() {
 		var compliments = this.complimentArray();
 		var index = this.randomIndex(compliments);
@@ -159,7 +159,9 @@ Module.register("compliments", {
 
 		var compliment = document.createTextNode(complimentText);
 		var wrapper = document.createElement("div");
-		wrapper.className = this.config.classes ? this.config.classes : "thin xlarge bright pre-line";
+		wrapper.className = this.config.classes
+			? this.config.classes
+			: "thin xlarge bright pre-line";
 		wrapper.appendChild(compliment);
 
 		return wrapper;
@@ -195,6 +197,5 @@ Module.register("compliments", {
 		if (notification === "CURRENTWEATHER_DATA") {
 			this.setCurrentWeatherType(payload.data);
 		}
-	},
-
+	}
 });

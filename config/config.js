@@ -60,6 +60,11 @@ var config = {
 			}
 		},
 		{
+			module: "MMM-Namnsdag",
+			position: "bottom_left",
+			header: "Dagens namn"
+		},
+		{
 			module: "compliments",
 			position: "lower_third"
 		},
@@ -80,6 +85,14 @@ var config = {
 				location: "New York",
 				locationID: "5128581", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
 				appid: "6dac6ac302c20baee466328c98a6e65d"
+			}
+		},
+		{
+			module: "MMM-ip",
+			position: "bottom_right",
+			config: {
+				fontSize: "9",
+				dimmed: "true"
 			}
 		},
 		{

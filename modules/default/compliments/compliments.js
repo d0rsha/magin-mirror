@@ -10,10 +10,10 @@ Module.register("compliments", {
 	// Module config defaults.
 	defaults: {
 		compliments: {
-			anytime: ["Drick kaffe!"],
-			morning: ["Nämen godmorgon godmorgon!", "Ta en kaffe!"],
-			afternoon: ["Ta en till kaffe!"],
-			evening: ["Godkväll!"]
+			anytime: ["Hello World!"],
+			morning: ["Hej världen!"],
+			afternoon: ["Hello World"],
+			evening: ["Hej världen!"]
 		},
 		updateInterval: 30000,
 		remoteFile: null,
